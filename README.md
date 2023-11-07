@@ -21,7 +21,7 @@ Crear un fichero de automatización de tareas en el que se prueben lo que se ha 
 - Hacer sourcesmaps del css
 - Lance BrowserSync
 - Investigar sobre paquetes para minificar imágenes y js. Automatizarlo.
-  
+
 ### Yeoman
 Crear un proyecto generado como una aplicación web básica con Yeoman.
 ### Parcel
