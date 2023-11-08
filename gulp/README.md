@@ -25,3 +25,7 @@ A simple move default task was programmed. I had to either `return` from the tas
 I used the `gulp-concat-css` plugin to extend the default task with a pipeline that takes all css files in `app/styles` and calls `concatCss` and finally `dest` to mke a `concatenated.css` file.
 
 I then had problems with sass because `gulp-sass` is documented for `node-sass` or for a way to use Dart Sass (the primary implementation of sass, the one that is a ruby gem) so ended up searching and using the `gulp-dart-sass` plugin from npm which worked straight away. A `series()` function is passed as second parameter to the `task` gulp method call to be able to execute first the `compilesass` task and then the `default` task.
+
+Then I added a `minifyCss()` step into the default task after installing the pacakge `gulp-minify-css`. It worked straight away too.
+
+
