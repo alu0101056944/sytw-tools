@@ -1,10 +1,19 @@
 
-const { src, dest, task } = require('gulp');
+const { src, dest, task, series } = require('gulp');
+const gulpSass = require('gulp-dart-sass');
 
 const concatCss = require('gulp-concat-css');
 
-task('default', async () => {
-  await src('./app/styles/*.css')
-      .pipe(concatCss('concatenated.css'))
+task('compilesass', () => {
+  return src('app/styles/*.scss')
+      .pipe(gulpSass
+          .sync({ outputStyle: 'compressed' })
+          .on('error', gulpSass.logError))
       .pipe(dest('app/styles'));
 });
+
+task('default', series('compilesass', () => {
+  return src('./app/styles/*.css')
+      .pipe(concatCss('concatenated.css'))
+      .pipe(dest('app/styles'));
+}));

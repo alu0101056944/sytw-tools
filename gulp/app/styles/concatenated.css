@@ -1,6 +1,9 @@
 body {
   background-color: lightblue;
 }
+.jumbotron .display-3 {
+  background-color: #483d8b;
+}
 footer {
   background-color: darkcyan;
 }
