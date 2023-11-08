@@ -7,7 +7,7 @@ const concatCss = require('gulp-concat-css');
 task('compilesass', () => {
   return src('app/styles/*.scss')
       .pipe(gulpSass
-          .sync({ outputStyle: 'compressed' })
+          .sync({ outputStyle: 'compressed' }) // faster than async
           .on('error', gulpSass.logError))
       .pipe(dest('app/styles'));
 });
