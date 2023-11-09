@@ -45,3 +45,5 @@ Note on sourcemaps:
 >> Source maps are commonly used in the context of JavaScript, CSS, and other web technologies that involve minification or compilation of code. They are an essential tool in the web development workflow, aiding in the development and debugging process.
 
 I installed `gulp-sourcemaps` and basically called `init()` and `write()` after I imbetween the minification.
+
+
