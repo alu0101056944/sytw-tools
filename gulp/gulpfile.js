@@ -10,6 +10,7 @@ const browserSync = require('browser-sync').create();
 const gulpSass = require('gulp-dart-sass');
 
 task('compilesass', () => {
+  console.log('called compilesass task');
   return src('app/styles/*.scss')
       .pipe(gulpSass
           .sync({ outputStyle: 'compressed' }) // faster than async
@@ -18,6 +19,7 @@ task('compilesass', () => {
 });
 
 function processCSS() {
+  console.log('called process css task');
   return src('./app/styles/*.css')
       .pipe(concatCss('main.css'))
       .pipe(sourcemaps.init())
@@ -27,6 +29,7 @@ function processCSS() {
 }
 
 task('activate-browser-sync', () => {
+  console.log('called activate-browser-sync task');
   browserSync.init({
     server: {
       baseDir: 'app',
@@ -36,4 +39,9 @@ task('activate-browser-sync', () => {
 
 task('default', series('compilesass', processCSS, 'activate-browser-sync'));
 
-watch('app/styles/*.*').on('change', browserSync);
+// watch('app/styles/*.*').on('change', () => {
+//   console.log('app/styles change detected');
+//   series('compilesass', processCSS, () => browserSync.reload())();
+// });
+watch('app/styles/*.*',
+    series('compilesass', processCSS, () => browserSync.reload()));
