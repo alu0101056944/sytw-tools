@@ -28,7 +28,7 @@ I then had problems with sass because `gulp-sass` is documented for `node-sass` 
 
 Then I added a `minifyCss()` step into the default task after installing the pacakge `gulp-minify-css`. It worked straight away too.
 
-###  Note about sourcemaps
+Note on sourcemaps:
 
 >> Me: What is a webbrowser's sourcemap?
 >
@@ -43,3 +43,5 @@ Then I added a `minifyCss()` step into the default task after installing the pac
 >> When using a modern web browser's developer tools, if source maps are available, the browser can use them to reconstruct the original source code while debugging. This makes the debugging process much more manageable for developers, as they can work with code that is easier to understand and navigate.
 >>
 >> Source maps are commonly used in the context of JavaScript, CSS, and other web technologies that involve minification or compilation of code. They are an essential tool in the web development workflow, aiding in the development and debugging process.
+
+I installed `gulp-sourcemaps` and basically called `init()` and `write()` after I imbetween the minification.
