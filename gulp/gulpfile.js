@@ -44,4 +44,4 @@ task('default', series('compilesass', processCSS, 'activate-browser-sync'));
 //   series('compilesass', processCSS, () => browserSync.reload())();
 // });
 watch('app/styles/*.*',
-    series('compilesass', processCSS, () => browserSync.reload()));
+  series('compilesass', processCSS));
