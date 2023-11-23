@@ -10,7 +10,6 @@ const browserSync = require('browser-sync').create();
 const gulpSass = require('gulp-dart-sass');
 
 task('compilesass', () => {
-  console.log('called compilesass task');
   return src('app/styles/*.scss')
       .pipe(gulpSass
           .sync({ outputStyle: 'compressed' }) // faster than async
@@ -28,14 +27,20 @@ task('processCss', () => {
 });
 
 task('activate-browser-sync', () => {
-  console.log('called activate-browser-sync task');
   browserSync.init({
     server: {
-      baseDir: 'app',
+      baseDir: './app/',
     }
   });
 });
 
-task('default', series('compilesass', 'processCss', 'activate-browser-sync'));
+// does not work because it does not react to file changes.
+// just execute npx gulp and see,
+task('startWatching', () => {
+  watch('app/styles/*.*', series('compileSass', 'processCss', browserSync.reload));
+});
 
-watch('app/styles/*.*', series('compilesass', 'processCss'));
+task('default', series('compilesass', 'processCss', 'activate-browser-sync',
+    'startWatching'));
+
+
