@@ -18,15 +18,14 @@ task('compilesass', () => {
       .pipe(dest('app/styles'));
 });
 
-function processCSS() {
-  console.log('called process css task');
+task('processCss', () => {
   return src('./app/styles/*.css')
       .pipe(concatCss('main.css'))
       .pipe(sourcemaps.init())
       .pipe(minifyCss())
       .pipe(sourcemaps.write())
       .pipe(dest('app/styles'));
-}
+});
 
 task('activate-browser-sync', () => {
   console.log('called activate-browser-sync task');
@@ -37,11 +36,6 @@ task('activate-browser-sync', () => {
   });
 });
 
-task('default', series('compilesass', processCSS, 'activate-browser-sync'));
+task('default', series('compilesass', 'processCss', 'activate-browser-sync'));
 
-// watch('app/styles/*.*').on('change', () => {
-//   console.log('app/styles change detected');
-//   series('compilesass', processCSS, () => browserSync.reload())();
-// });
-watch('app/styles/*.*',
-  series('compilesass', processCSS));
+watch('app/styles/*.*', series('compilesass', 'processCss'));

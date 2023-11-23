@@ -47,3 +47,16 @@ Note on sourcemaps:
 I installed `gulp-sourcemaps` and basically called `init()` and `write()` after I imbetween the minification.
 
 I checked the functioning of `watch`, which simply either returns an object to which an `on` can be called from to listen to specific events, and whose callback (second argument) receives the `path` and the `fs.Stats` arguments, and then I learned about `task`, which simply creates a new task object and adds it to an internal registry that knows the tasks (it's name, it's function, ...). Finally, `series` is just a wrapper with extra steps to fetch a task function array from the registry for the normal js series function, normally the `seriesSettled` version which does not stop ona single fail. I also noticed that gulp's code is old and really scattered through various npm modules, and it uses `bach` module which i feel is just an old version of JS's `async/`.
+
+> Sobre browserSync
+>
+>> (...)
+>>
+>>3. Start Browsersync
+>>
+>>A basic use is to watch all CSS files in the css directory and update connected browsers if a change >>occurs. Navigate your terminal window to a project and run the appropriate command:
+>>Static sites
+>>
+>>**If you’re only using .html files, you’ll need to use the server mode. Browsersync will start a mini-server and provide a URL to view your site**.
+>
+> - [https://browsersync.io/](https://browsersync.io/)
