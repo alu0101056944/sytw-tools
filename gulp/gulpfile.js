@@ -4,44 +4,39 @@ const { src, dest, task, series, watch } = require('gulp');
 const concatCss = require('gulp-concat-css');
 const minifyCss = require('gulp-minify-css');
 const sourcemaps = require('gulp-sourcemaps');
-const del = require('del');
 
 const browserSync = require('browser-sync').create();
 
 const gulpSass = require('gulp-dart-sass');
 
-task('deleteMain', () => {
-  return del(['app/styles/main.css']);
-});
-
-task('compilesass', () => {
-      return src('app/styles/*.scss')
+task('compilesass', (done) => {
+      src('app/styles/*.scss')
           .pipe(gulpSass
               .sync({ outputStyle: 'compressed' }) // faster than async
               .on('error', gulpSass.logError))
           .pipe(dest('app/styles'));
+      done();
     });
 
-task('processCss', () => {
-      return src('./app/styles/*.css')
-          .pipe(concatCss('main.css'))
-          .pipe(sourcemaps.init())
-          .pipe(minifyCss())
-          .pipe(sourcemaps.write())
-          .pipe(dest('app/styles'));
+task('processCss', (done) => {
+      src('./app/styles/*.css')
+            .pipe(concatCss('main.css'))
+            .pipe(sourcemaps.init())
+            .pipe(minifyCss())
+            .pipe(sourcemaps.write())
+            .pipe(dest('app/styles'));
+      done();
     });
 
-task('activate-browser-sync', () => {
+task('activate-browser-sync', (done) => {
       browserSync.init({
         server: {
           baseDir: './app/',
         }
       });
+      done();
     });
 
-task('default', series('deleteMain', 'compilesass', 'processCss',
-    'activate-browser-sync'));
+task('default', series('compilesass', 'processCss', 'activate-browser-sync'));
 
-// try app/styles/* instead
-watch('app/styles/*.*', series('deleteMain', 'compilesass', 'processCss',
-    browserSync.reload));
+watch('app/styles/*', { delay: 1000 }, series('compilesass', 'processCss', browserSync.reload));
