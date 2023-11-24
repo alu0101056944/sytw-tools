@@ -60,3 +60,6 @@ I checked the functioning of `watch`, which simply either returns an object to w
 >>**If you’re only using .html files, you’ll need to use the server mode. Browsersync will start a mini-server and provide a URL to view your site**.
 >
 > - [https://browsersync.io/](https://browsersync.io/)
+
+
+I changed the task definitions to use a `done` callback instead of `return` because I think it is less confusing that way.
