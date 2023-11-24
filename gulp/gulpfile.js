@@ -34,13 +34,8 @@ task('activate-browser-sync', () => {
   });
 });
 
-// does not work because it does not react to file changes.
-// just execute npx gulp and see,
-task('startWatching', () => {
-  watch('app/styles/*.*', series('compileSass', 'processCss', browserSync.reload));
-});
+watch('app/styles/*.*', series('compilesass', 'processCss', browserSync.reload));
 
-task('default', series('compilesass', 'processCss', 'activate-browser-sync',
-    'startWatching'));
+task('default', series('compilesass', 'processCss', 'activate-browser-sync'));
 
 
