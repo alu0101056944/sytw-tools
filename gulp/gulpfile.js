@@ -6,6 +6,12 @@ const minifyCss = require('gulp-minify-css');
 const sourcemaps = require('gulp-sourcemaps');
 const browserSync = require('browser-sync').create();
 const gulpSass = require('gulp-dart-sass');
+const del = require('del');
+
+function cleanup(done) {
+  del(['app/styles/main.css']);
+  done();
+}
 
 function compileSass(done) {
   src('app/styles/*.scss')
@@ -13,7 +19,7 @@ function compileSass(done) {
           .sync({ outputStyle: 'compressed' }) // faster than async
           .on('error', gulpSass.logError))
       .pipe(dest('app/styles'));
-
+  
   done();
 };
 
@@ -29,6 +35,10 @@ function processCss(done) {
   done();
 };
 
+async function reload() {
+  return browserSync.reload();
+}
+
 exports.default = function(done) {
   browserSync.init({
         server: {
@@ -37,7 +47,8 @@ exports.default = function(done) {
       });
 
   watch('app/styles/*.scss',  { ignoreInitial: false }, compileSass);
-  watch('app/styles/*.css', { ignoreInitial: false, delay: 500 }, processCss);
-  
+  watch(['app/styles/*.css', '!app/styles/main.css'],
+      { ignoreInitial: false }, series(cleanup, processCss, reload));
+
   done();
 };
