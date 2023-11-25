@@ -4,9 +4,7 @@ const { src, dest, task, series, watch } = require('gulp');
 const concatCss = require('gulp-concat-css');
 const minifyCss = require('gulp-minify-css');
 const sourcemaps = require('gulp-sourcemaps');
-
 const browserSync = require('browser-sync').create();
-
 const gulpSass = require('gulp-dart-sass');
 
 task('compilesass', (done) => {
@@ -19,7 +17,7 @@ task('compilesass', (done) => {
     });
 
 task('processCss', (done) => {
-      src('./app/styles/*.css')
+      src(['./app/styles/*.css', '!./app/styles/main.css'])
             .pipe(concatCss('main.css'))
             .pipe(sourcemaps.init())
             .pipe(minifyCss())
@@ -38,7 +36,8 @@ task('activate-browser-sync', (done) => {
       done();
     });
 
-task('default', series('compilesass', 'processCss', 'activate-browser-sync'));
+task('default', series('cleanup', 'compilesass', 'processCss',
+    'activate-browser-sync'));
 
-watch('app/styles/*').on('change', series('compilesass', 'processCss', browserSync.reload));
-
+watch('app/styles/*').on('change', series('cleanup', 'compilesass', 'processCss',
+    browserSync.reload));
