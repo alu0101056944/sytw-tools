@@ -24,7 +24,8 @@ task('processCss', (done) => {
             .pipe(sourcemaps.init())
             .pipe(minifyCss())
             .pipe(sourcemaps.write())
-            .pipe(dest('app/styles'));
+            .pipe(dest('app/styles'))
+            .pipe(browserSync.stream());
       done();
     });
 
@@ -39,4 +40,5 @@ task('activate-browser-sync', (done) => {
 
 task('default', series('compilesass', 'processCss', 'activate-browser-sync'));
 
-watch('app/styles/*', { delay: 1000 }, series('compilesass', 'processCss', browserSync.reload));
+watch('app/styles/*').on('change', series('compilesass', 'processCss', browserSync.reload));
+
