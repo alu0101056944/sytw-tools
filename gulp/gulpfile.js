@@ -7,37 +7,35 @@ const sourcemaps = require('gulp-sourcemaps');
 const browserSync = require('browser-sync').create();
 const gulpSass = require('gulp-dart-sass');
 
-task('compilesass', (done) => {
-      src('app/styles/*.scss')
-          .pipe(gulpSass
-              .sync({ outputStyle: 'compressed' }) // faster than async
-              .on('error', gulpSass.logError))
-          .pipe(dest('app/styles'));
-      done();
-    });
+function compileSass(done) {
+  src('app/styles/*.scss')
+      .pipe(gulpSass
+          .sync({ outputStyle: 'compressed' }) // faster than async
+          .on('error', gulpSass.logError))
+      .pipe(dest('app/styles'));
 
-task('processCss', (done) => {
-      src(['./app/styles/*.css', '!./app/styles/main.css'])
-            .pipe(concatCss('main.css'))
-            .pipe(sourcemaps.init())
-            .pipe(minifyCss())
-            .pipe(sourcemaps.write())
-            .pipe(dest('app/styles'))
-            .pipe(browserSync.stream());
-      done();
-    });
+  done();
+};
 
-task('activate-browser-sync', (done) => {
-      browserSync.init({
+function processCss(done) {
+  src(['./app/styles/*.css', '!./app/styles/main.css'])
+      .pipe(concatCss('main.css'))
+      .pipe(sourcemaps.init())
+      .pipe(minifyCss())
+      .pipe(sourcemaps.write())
+      .pipe(dest('app/styles'))
+      .pipe(browserSync.stream());
+
+  done();
+};
+
+exports.default = function() {
+  browserSync.init({
         server: {
           baseDir: './app/',
         }
       });
-      done();
-    });
 
-task('default', series('cleanup', 'compilesass', 'processCss',
-    'activate-browser-sync'));
-
-watch('app/styles/*').on('change', series('cleanup', 'compilesass', 'processCss',
-    browserSync.reload));
+  watch('app/styles/*.scss', compileSass);
+  watch('app/styles/*.css', series(processCss, browserSync.reload));
+};
