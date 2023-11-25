@@ -29,13 +29,15 @@ function processCss(done) {
   done();
 };
 
-exports.default = function() {
+exports.default = function(done) {
   browserSync.init({
         server: {
           baseDir: './app/',
         }
       });
 
-  watch('app/styles/*.scss', compileSass);
-  watch('app/styles/*.css', series(processCss, browserSync.reload));
+  watch('app/styles/*.scss',  { ignoreInitial: false }, compileSass);
+  watch('app/styles/*.css', { ignoreInitial: false, delay: 500 }, processCss);
+  
+  done();
 };
