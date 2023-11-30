@@ -17,7 +17,6 @@
     "browser-sync": "^2.29.3",
     "cross-env": "^5.2.0",
     "cssnano": "^4.1.10",
-    "http-server": "^14.1.1",
     "mkdirp": "^0.5.1",
     "mocha": "^6.1.4",
     "parcel-bundler": "^1.12.5",
@@ -26,8 +25,8 @@
   "scripts": {
     "clean": "rm dist/bundle.js",
     "start": "parcel src/index.html",
-    "build-prod": "parcel build app/index.html",
-    "serve": "http-server dist/ -c-1 -o"
+    "build-prod": "parcel build app/index.html --no-cache",
+    "serve": "parcel serve app/index.html --open --port 8080"
   },
   "browserslist": [
     "> 1%",
