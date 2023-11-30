@@ -5,7 +5,6 @@
   },
   "dependencies": {
     "bootstrap": "^4.3.1",
-    "gulp-concat-css": "^3.1.0",
     "jquery": "^3.4.1",
     "modernizr": "^3.7.1",
     "popper.js": "^1.15.0"
@@ -18,16 +17,17 @@
     "browser-sync": "^2.29.3",
     "cross-env": "^5.2.0",
     "cssnano": "^4.1.10",
-    "del": "^6.1.0",
+    "http-server": "^14.1.1",
     "mkdirp": "^0.5.1",
     "mocha": "^6.1.4",
+    "parcel-bundler": "^1.12.5",
     "yargs": "13.2.4"
   },
   "scripts": {
-    "serve:test": "cross-env NODE_ENV=test gulp serve",
-    "serve:dist": "cross-env NODE_ENV=production gulp serve",
-    "build": "cross-env NODE_ENV=production gulp",
-    "test": "npm run serve:test"
+    "clean": "rm dist/bundle.js",
+    "start": "parcel src/index.html",
+    "build-prod": "parcel build app/index.html",
+    "serve": "http-server dist/ -c-1 -o"
   },
   "browserslist": [
     "> 1%",
