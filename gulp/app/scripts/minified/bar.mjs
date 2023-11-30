@@ -1,4 +1,4 @@
 
-export default function bar() {
+module.exports = function bar() {
   console.log('Called bar');
 }

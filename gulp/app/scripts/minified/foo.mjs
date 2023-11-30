@@ -1,4 +1,4 @@
 
-export default function foo() {
+module.exports = function foo() {
   console.log('Called foo');
 }

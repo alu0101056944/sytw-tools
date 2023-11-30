@@ -8,7 +8,7 @@ const browserSync = require('browser-sync').create();
 const gulpSass = require('gulp-dart-sass');
 const del = require('del');
 const imagemin = require('gulp-imagemin');
-// const gulpMinify = require('gulp-minify');
+const gulpMinify = require('gulp-minify');
 
 async function cleanup() {
   return del(['app/styles/main.css']);
@@ -42,11 +42,11 @@ async function optimizeImages() {
       .pipe(dest('app/images'));
 }
 
-// async function minifyJs() {
-//   return src(['./app/scripts/*.mjs'])
-//       .pipe(gulpMinify())
-//       .pipe(dest('./app/scripts/minified'));
-// }
+async function minifyJs() {
+  return src(['./app/scripts/*.js', './app/scripts/*.mjs'])
+      .pipe(gulpMinify())
+      .pipe(dest('./app/scripts/minified/'));
+}
 
 exports.default = async function() {
   browserSync.init({
@@ -56,9 +56,10 @@ exports.default = async function() {
       });
 
   series(optimizeImages)();
-  // await minifyJs();
 
   watch('app/styles/*.scss',  { ignoreInitial: false }, compileSass);
   watch(['app/styles/*.css', '!app/styles/main.css'],
       { ignoreInitial: false }, series(cleanup, processCss, reload));
+  watch(['app/scripts/*.js', 'app/scripts/*.mjs'],
+      { ignoreInitial: false }, series(minifyJs));
 };
