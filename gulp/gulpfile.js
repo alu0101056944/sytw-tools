@@ -8,7 +8,7 @@ const browserSync = require('browser-sync').create();
 const gulpSass = require('gulp-dart-sass');
 const del = require('del');
 const imagemin = require('gulp-imagemin');
-const gulpMinify = require('gulp-minify');
+const uglify = require('gulp-uglify');
 
 async function cleanup() {
   return del(['app/styles/main.css']);
@@ -44,7 +44,7 @@ async function optimizeImages() {
 
 async function minifyJs() {
   return src(['./app/scripts/*.js', './app/scripts/*.mjs'])
-      .pipe(gulpMinify())
+      .pipe(uglify())
       .pipe(dest('./app/scripts/minified/'));
 }
 

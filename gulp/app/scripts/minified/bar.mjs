@@ -1,4 +1,1 @@
-
-module.exports = function bar() {
-  console.log('Called bar');
-}
+module.exports=function(){console.log("Called bar")};
