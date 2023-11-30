@@ -7,7 +7,7 @@ const sourcemaps = require('gulp-sourcemaps');
 const browserSync = require('browser-sync').create();
 const gulpSass = require('gulp-dart-sass');
 const del = require('del');
-// const imageop = require('gulp-image-optimization');
+const imagemin = require('gulp-imagemin');
 // const gulpMinify = require('gulp-minify');
 
 async function cleanup() {
@@ -36,15 +36,11 @@ async function reload() {
   return browserSync.reload();
 }
 
-// async function optimizeImages() {
-//   return src(['./app/*.png'])
-//       .pipe(imageop({
-//             optimizationLevel: 5,
-//             progressive: true,
-//             interlaced: true
-//           }))
-//       .pipe(dest('app/images'));
-// }
+async function optimizeImages() {
+  return src(['./app/*.png'])
+      .pipe(imagemin())
+      .pipe(dest('app/images'));
+}
 
 // async function minifyJs() {
 //   return src(['./app/scripts/*.mjs'])
@@ -59,7 +55,7 @@ exports.default = async function() {
         }
       });
 
-  // await optimizeImages();
+  series(optimizeImages)();
   // await minifyJs();
 
   watch('app/styles/*.scss',  { ignoreInitial: false }, compileSass);
