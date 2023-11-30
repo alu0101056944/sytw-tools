@@ -1,4 +1,12 @@
-# Tecnologías Web: Cliente
+# Tecnologías Web: Cliente; alu0101056944
+
+Marcos Jesús Barrios Lorenzo, alu0101056944
+
+## Estructura de la práctica
+
+ - En [gulp/](gulp/) se puede encontrar la parte de **gulp**, con su propio [README.md](gulp/README.md).
+ - En [parcel/](parcel/) se puede encontrar la parte de **parcel**, con su propio [README.md](parcel/README.md).
+
 ## Herramientas de desarrollo en el lado del Cliente.
 
 - VS Code - Live Server
