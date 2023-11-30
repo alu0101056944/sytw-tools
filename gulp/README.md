@@ -63,3 +63,19 @@ I checked the functioning of `watch`, which simply either returns an object to w
 
 
 I changed the task definitions to use a `done` callback instead of `return` because I think it is less confusing that way.
+
+After a lot of experimentation, I managed to get a Js minifier working. Installed `gulp-uglify` and it worked straight away, while others like `gulp-minify` do not work (probably due to it exporting nothing, maybe I need an extra Typescript step). Image optimization remains a mistery, I did not find any gulp plugin for it. Most plugins are old.
+
+## Final results
+
+### 1. CSS
+
+It first compiles the `.scss` files, then it concatenates all css files into a [app/styles/main.css](app/styles/main.css) with sourcemap:
+
+![All files into main.css](docs/css_result.png)
+
+### 2. Js
+
+I use `gulp-uglify` to minify the Js files into [app/scripts/minified](app/scripts/minified/):
+
+![All Js files and their minified versions](docs/js-minified.png)

@@ -8,7 +8,6 @@
 - Generación del proyecto:  *Yeoman*
 - Automatización de tareas *Gulp*, *Grunt*
 
-
 ## Actividades: 
 
 ### Gulp
